@@ -45,7 +45,7 @@ export async function processTexts(texts: string[]) {
 
      const completion = await openai.chat.completions.create({
        messages: [{ role: 'user', content: prompt }],
-       model: 'gpt-4',
+       model: 'gpt-4o',
      });
    
      console.log(completion.choices[0].message.content);
