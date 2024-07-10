@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { callGpt, processTexts, splitText } from './gptService';
+import { processTexts, splitText } from './gptService';
 import fs from 'fs';
 import { convertReadStream } from './speechToText';
 
@@ -48,8 +48,12 @@ export function getTextAndInstructions(): { text: string, instructions: string }
 
 async function getTextFromSpeechToText(): Promise<string|null> {
     const audio = fs.createReadStream(process.env.soundFile || '');
-    const theText = await convertReadStream(audio)
- 
+    return await fromReadStreamToText(audio);
+}
+
+export async function fromReadStreamToText(audio: fs.ReadStream) {
+    const theText = await convertReadStream(audio);
+
     const textAndInstructions = splitText(theText);
     const result = await processTexts(textAndInstructions);
     return result;
@@ -66,5 +70,6 @@ async function main() {
     }
 }
 
-
-main();
+if (require.main === module) {
+    main();
+}
