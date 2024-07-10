@@ -12,7 +12,7 @@ const openai = new OpenAI({
    });
    
 export function splitText(text: string, delimiter: string=''): string[] {
-    delimiter ||= 'טיק טיק';
+    delimiter ||= 'ביפ';
     const listall = text.split(delimiter);
     console.log(listall);
     return listall;
